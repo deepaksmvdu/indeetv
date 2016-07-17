@@ -1,0 +1,38 @@
+{% extends "indeetv/base.html" %}
+{% block content %}
+<div class="container" style="margin-top:10%" >
+        <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        	<div class="panel panel-default">
+        		<div class="panel-heading inline">
+			    		<h3 class="panel-title">Please sign up</h3>
+			    		<h6><a href="login_req" class="text-center new-account">Already have account</a></h6>
+			 			</div>
+			 			<div class="panel-body">
+			    	<form role="form" action="signup" method="POST">
+			    			{% csrf_token %}
+			    			{{status}}
+
+			    	<input type="text" style="margin-top:10px;" id="username"placeholder="Username" class="form-control input-sm" for="username" name="username" required>
+
+			        <input type="email" style="margin-top:10px;" id = "email" placeholder="Email" name="email" class="form-control input-sm" for="email" required> 
+
+			        <input style="margin-top:10px;" type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Uppercase, Lowercase and Number" placeholder="Password" class="form-control" name="password" for="password" required>
+
+			         <button style="margin-top:10px;" class="btn btn-lg btn-primary btn-block" type="submit">
+			                    Sign up</button>
+			               
+			           
+
+
+
+
+			    	
+			    			 
+			    		</form>
+			    	</div>
+	    		</div>
+    		</div>
+    	</div>
+    </div>
+{% endblock %}
