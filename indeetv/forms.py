@@ -2,7 +2,7 @@
 
 from django import forms
 from models import SignUp,Login,FileType
-
+from django.contrib.auth.models import User
 
  
 class SignUpForm(forms.ModelForm):
@@ -25,7 +25,8 @@ class LoginForm(forms.ModelForm):
 
 class Dashboard(forms.ModelForm):
     fileupload = forms.FileField()
-    #name = forms.CharField()
-
+     
+   
     class Meta:
         model = FileType
+        exclude = ('user',)

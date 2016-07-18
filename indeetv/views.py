@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from forms import * 
@@ -6,6 +7,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.conf import settings
+import reportlab
 # Create your views here.
 
 
@@ -36,7 +39,7 @@ def signup(request):
 			user = User.objects.create_user(username=username,password=password,
 				email=email)
 			user.save()
-			return render(request, 'indeetv/login.html',{"status":"Please Login"})
+			return render(request, 'indeetv/login.html')
 	else:
 		forms = SignUpForm()
 		return render(request, 'indeetv/signup.html', {'form': forms})
@@ -64,25 +67,33 @@ def login_req(request):
 		return render(request, 'indeetv/login.html')
 
 
-@login_required
+@login_required(login_url='login_req')
 def dashboard(request):
-
+	loggedin_user = request.user
 	if request.method =='POST':
-		current_user = request.user
-		forms = Dashboard(request.POST,request.FILES)
+		forms = Dashboard(request.POST,request.FILES,User)
 		if forms.is_valid():
-			newdoc = FileType(fileupload = request.FILES['fileupload'])
+			newdoc = FileType(fileupload = request.FILES['fileupload'],user=loggedin_user)
+			newdoc.user = request.user
 			newdoc.save()
-			print current_user
+			 
 		return HttpResponseRedirect('/dashboard')
 
 	else:
 		forms = Dashboard()
-	documents = FileType.objects.all()
+	documents = FileType.objects.filter(user=request.user)
 
-	 
+	print documents
 	return render_to_response(
         'indeetv/dashboard.html',
         {'documents': documents, 'form': forms},
         context_instance=RequestContext(request)
     )
+def mediaitems(request):
+	 
+	tesxt = os.path.join(settings.MEDIA_ROOT, '60005436.pdf')
+	print tesxt
+	return render(request, 'indeetv/mediafiles.html',{"response":tesxt})
+
+		
+ 
