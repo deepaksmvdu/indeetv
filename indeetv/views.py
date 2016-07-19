@@ -56,8 +56,6 @@ def login_req(request):
 		submit = LoginForm(request.POST)
 		if submit.is_valid():
 			person = authenticate(username=username,password=password)
-			print person
-			print  User.objects.all()
 			if person is not None:
 
 				login(request,person)
@@ -84,10 +82,6 @@ def dashboard(request):
 	else:
 		forms = Dashboard()
 	documents = FileType.objects.filter(user=request.user)
-	# import pdb
-	# pdb.set_trace()
-	# print "gogo"
-	print documents
 	return render_to_response(
         'indeetv/dashboard.html',
         {'documents': documents, 'form': forms},
