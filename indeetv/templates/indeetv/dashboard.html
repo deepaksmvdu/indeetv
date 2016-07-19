@@ -34,7 +34,7 @@
                 {% if documents %}
                     <ul>
                     {% for d in documents %}
-                        <li><a href="{{ d.fileupload.url }}" target="_blank">{{ d.fileupload.name }}</a></li>
+                        <li><a href="mediafiles{{d.fileupload.name}}" target="_blank">{{ d.fileupload.name }}</a></li>
                         
                     {% endfor %}
                     </ul>

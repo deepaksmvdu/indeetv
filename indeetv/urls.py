@@ -9,6 +9,6 @@ urlpatterns = [
     url(r'^dashboard', views.dashboard, name='dashboard'),
     url(r'^logout_user', views.logout_user, name='logout_user'),
 
-    # url(r'^media', views.mediaitems, name='mediaitems'),
+    url(r'^mediafiles', views.mediaitems, name='mediaitems'),
     
 ]

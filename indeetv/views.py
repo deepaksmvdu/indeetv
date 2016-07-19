@@ -39,7 +39,9 @@ def signup(request):
 			user = User.objects.create_user(username=username,password=password,
 				email=email)
 			user.save()
-			return render(request, 'indeetv/login.html')
+			person = authenticate(username=username,password=password)
+			login(request,person)
+			return HttpResponseRedirect('/dashboard')
 	else:
 		forms = SignUpForm()
 		return render(request, 'indeetv/signup.html', {'form': forms})
@@ -82,18 +84,21 @@ def dashboard(request):
 	else:
 		forms = Dashboard()
 	documents = FileType.objects.filter(user=request.user)
-
+	# import pdb
+	# pdb.set_trace()
+	# print "gogo"
 	print documents
 	return render_to_response(
         'indeetv/dashboard.html',
         {'documents': documents, 'form': forms},
         context_instance=RequestContext(request)
     )
+
+
+ 
 def mediaitems(request):
-	 
-	tesxt = os.path.join(settings.MEDIA_ROOT, '60005436.pdf')
-	print tesxt
-	return render(request, 'indeetv/mediafiles.html',{"response":tesxt})
+	data = request.path.split("/")[2]
+	return render(request, 'indeetv/mediafiles.html',{'path': data})
 
 		
  
