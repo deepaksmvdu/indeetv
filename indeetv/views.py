@@ -1,14 +1,14 @@
 import os
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
-from forms import * 
-from models import *
+from indeetv.forms import * 
+from indeetv.models import *
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.conf import settings
-import reportlab
+import re
 # Create your views here.
 
 
@@ -73,7 +73,11 @@ def dashboard(request):
 	if request.method =='POST':
 		forms = Dashboard(request.POST,request.FILES,User)
 		if forms.is_valid():
+			newfilename = request.POST.get('newfilename')
 			newdoc = FileType(fileupload = request.FILES['fileupload'],user=loggedin_user)
+			if newfilename and newfilename != '':
+				ext = re.search(r'\.(.*)', newdoc.fileupload.name).groups()[0]
+				newdoc.fileupload.name = newfilename +'.'+ext
 			newdoc.user = request.user
 			newdoc.save()
 			 
@@ -90,8 +94,9 @@ def dashboard(request):
 
 
  
-def mediaitems(request):
-	data = request.path.split("/")[2]
+def mediaitems(request, user_id,filename):
+	data = user_id + '/' + filename
+	print (data)
 	return render(request, 'indeetv/mediafiles.html',{'path': data})
 
 		

@@ -34,7 +34,7 @@
                 {% if documents %}
                     <ul>
                     {% for d in documents %}
-                        <li><a href="mediafiles{{d.fileupload.name}}" target="_blank">{{ d.fileupload.name }}</a></li>
+                        <li><a href="mediafiles/{{d.fileupload.name}}" target="_blank">{{ d.fileupload.name }}</a></li>
                         
                     {% endfor %}
                     </ul>
@@ -46,10 +46,11 @@
                 {% csrf_token %}
                 <div class="row">
                     <input type="file" class="btn btn-default btn-file" name="fileupload" id="fileToUpload">
+                    <input type="text" name="newfilename" id="newfilename" style="margin-top: -35px;margin-left: 200px;" placeholder="upload file as(filename)">
                     <input type="hidden" for="user" name="user" value="{{user}}">
                    
                 </div>
-                    <input type="submit" class="btn btn-default" style="margin-top: -35px;margin-left: 127px;" value="Upload" name="submit">
+                    <input type="submit" class="btn btn-default" style="margin-top: -35px;margin-left: 450px;" value="Upload" name="submit">
                 
                 </form>
                 </div>

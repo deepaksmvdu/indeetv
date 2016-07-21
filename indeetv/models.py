@@ -22,11 +22,15 @@ class Login(models.Model):
 
 
 
-class FileType(models.Model):
-	fileupload = models.FileField('')
-	user = models.ForeignKey(User)
+def user_directory_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
 
-	#name = models.CharField(max_length=200)
+
+class FileType(models.Model):
+	fileupload = models.FileField(upload_to=user_directory_path)
+	user = models.ForeignKey(User)
+	newfilename = models.CharField(max_length=100)
+
 
 	
 		

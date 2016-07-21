@@ -1,7 +1,7 @@
 #files.py
 
 from django import forms
-from models import SignUp,Login,FileType
+from indeetv.models import SignUp,Login,FileType
 from django.contrib.auth.models import User
 
  
@@ -25,8 +25,8 @@ class LoginForm(forms.ModelForm):
 
 class Dashboard(forms.ModelForm):
     fileupload = forms.FileField()
-     
-   
+    # newfilename = forms.CharField(max_length=100)
+
     class Meta:
         model = FileType
-        exclude = ('user',)
+        exclude = ('user', 'newfilename')
